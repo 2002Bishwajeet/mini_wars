@@ -1,0 +1,9 @@
+import 'package:appwrite/appwrite.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+final clientProvider = Provider<Client>((ref) {
+  return Client()
+      .setEndpoint('http://localhost:5000/v1')
+      .setProject('miniwars')
+      .setSelfSigned(status: true);
+});
