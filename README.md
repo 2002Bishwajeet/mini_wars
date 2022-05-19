@@ -2,8 +2,12 @@
 
 A Mini action game built using Flutter and Flame. Backend used Appwrite.
 <p>
-<a href="https://appwrite.io/" target="_blank" >
-  <img style="width: 160px" src=".github\logos\builtwithFlutter.svg" alt="Built with Appwrite">
+<a href="https://flutter.dev/" target="_blank" >
+  <img style="width: 160px" src=".github\logos\builtwithFlutter.svg" alt="Built with Flutter">
+</a>
+<a>&nbsp;&nbsp;&nbsp;</a>
+<a href="https://flame-engine.org/" target="_blank" >
+  <img style="width: 160px;" src=".github\logos\flame.png" alt="Built with Flame">
 </a>
 <a>&nbsp;&nbsp;&nbsp;</a>
 <!-- 'Made with Appwrite' badge -->
