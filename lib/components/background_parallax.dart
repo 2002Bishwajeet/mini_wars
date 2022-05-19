@@ -1,0 +1,3 @@
+class BackgroundComponent extends ParallaxComponent {
+    
+}
