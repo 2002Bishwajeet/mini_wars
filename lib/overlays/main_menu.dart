@@ -38,6 +38,7 @@ class _MainMenuState extends ConsumerState<MainMenu> {
   Widget build(BuildContext context) {
     return Sizer(
       builder: (context, orientation, type) => Scaffold(
+        backgroundColor: Colors.white.withOpacity(0.2),
         body: SafeArea(
           child: Stack(
             fit: StackFit.expand,
@@ -80,7 +81,7 @@ class _MainMenuState extends ConsumerState<MainMenu> {
                   Container(
                     margin: const EdgeInsets.symmetric(vertical: 8),
                     width: 15.w,
-                    height: 7.h,
+                    height: 5.h,
                     child: MaterialButton(
                       onPressed: () {},
                       color: Colors.green.shade700,
@@ -101,7 +102,7 @@ class _MainMenuState extends ConsumerState<MainMenu> {
                   Container(
                     margin: const EdgeInsets.symmetric(vertical: 8),
                     width: 15.w,
-                    height: 7.h,
+                    height: 5.h,
                     child: MaterialButton(
                       onPressed: () {},
                       color: Colors.green.shade700,
