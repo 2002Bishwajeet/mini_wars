@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:mini_wars/mini_wars.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
 
 import '../api/auth/authentication.dart';
 import '../providers/auth.dart';
 
 class MainMenu extends ConsumerStatefulWidget {
+  final MiniWars gameRef;
   static const routename = '/LoginPage';
-  const MainMenu({Key? key}) : super(key: key);
+  const MainMenu({Key? key, required this.gameRef}) : super(key: key);
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _MainMenuState();
@@ -38,7 +41,7 @@ class _MainMenuState extends ConsumerState<MainMenu> {
   Widget build(BuildContext context) {
     return Sizer(
       builder: (context, orientation, type) => Scaffold(
-        backgroundColor: Colors.white.withOpacity(0.2),
+        backgroundColor: Colors.black87.withOpacity(0.4),
         body: SafeArea(
           child: Stack(
             fit: StackFit.expand,
@@ -73,17 +76,24 @@ class _MainMenuState extends ConsumerState<MainMenu> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
-                    'Mini Wars',
-                    style: Theme.of(context).textTheme.headline1!.copyWith(
-                        fontFamily: 'thesims', color: Colors.green.shade900),
+                  Shimmer.fromColors(
+                    highlightColor: Colors.green.shade700,
+                    baseColor: Colors.green.shade900,
+                    period: const Duration(seconds: 5),
+                    child: Text(
+                      'Mini Wars',
+                      style: Theme.of(context).textTheme.headline1!.copyWith(
+                          fontFamily: 'thesims', color: Colors.green.shade900),
+                    ),
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(vertical: 8),
                     width: 15.w,
-                    height: 5.h,
+                    height: 8.h,
                     child: MaterialButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        widget.gameRef.overlays.remove(MainMenu.routename);
+                      },
                       color: Colors.green.shade700,
                       textColor: Colors.white,
                       textTheme: ButtonTextTheme.primary,
@@ -95,28 +105,8 @@ class _MainMenuState extends ConsumerState<MainMenu> {
                       ),
                       child: const Text(
                         'Play',
-                        style: TextStyle(fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(vertical: 8),
-                    width: 15.w,
-                    height: 5.h,
-                    child: MaterialButton(
-                      onPressed: () {},
-                      color: Colors.green.shade700,
-                      textColor: Colors.white,
-                      textTheme: ButtonTextTheme.primary,
-                      minWidth: 100,
-                      padding: const EdgeInsets.all(18),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                        side: BorderSide(color: Colors.green.shade700),
-                      ),
-                      child: const Text(
-                        'Quit',
-                        style: TextStyle(fontWeight: FontWeight.w600),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600, fontSize: 18),
                       ),
                     ),
                   ),
