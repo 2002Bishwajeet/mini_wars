@@ -34,13 +34,15 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   flame: ^1.1.1
-  appwrite: ^4.0.2
-  google_fonts: ^2.3.2
+  appwrite: ^5.0.0
+  google_fonts: ^3.0.0
   font_awesome_flutter: ^10.1.0
   sizer: ^2.0.15
   flutter_riverpod: ^1.0.4
   flutter_hex_color: ^2.0.0
   shimmer: ^2.0.0
+  auto_size_text: ^3.0.0
+  flame_audio: ^1.0.2
 
 dev_dependencies:
   flutter_test:
