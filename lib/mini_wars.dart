@@ -1,5 +1,6 @@
 import 'package:flame/game.dart';
-import 'package:mini_wars/components/background_component.dart';
+
+import 'components/background_component.dart';
 
 class MiniWars extends FlameGame {
   @override

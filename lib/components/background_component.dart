@@ -3,6 +3,7 @@ import 'package:flame/parallax.dart';
 import 'package:mini_wars/mini_wars.dart';
 
 class Background extends ParallaxComponent<MiniWars> {
+  Background() : super();
   final _layersMeta = {
     'spritesheets/background/1.png': 1.0,
     'spritesheets/background/2.png': 1.5,

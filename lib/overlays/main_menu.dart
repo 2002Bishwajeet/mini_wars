@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:mini_wars/components/player_component.dart';
 import 'package:mini_wars/mini_wars.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
@@ -93,6 +94,7 @@ class _MainMenuState extends ConsumerState<MainMenu> {
                     child: MaterialButton(
                       onPressed: () {
                         widget.gameRef.overlays.remove(MainMenu.routename);
+                        widget.gameRef.add(Player());
                       },
                       color: Colors.green.shade700,
                       textColor: Colors.white,
