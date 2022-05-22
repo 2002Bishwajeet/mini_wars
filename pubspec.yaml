@@ -69,6 +69,7 @@ flutter:
   assets:
     - assets/images/spritesheets/background/
     - assets/images/spritesheets/player/
+    - assets/audio/
 
   #   - images/a_dot_ham.jpeg
 

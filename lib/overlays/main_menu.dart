@@ -55,7 +55,7 @@ class _MainMenuState extends ConsumerState<MainMenu> {
                   color: Colors.green.shade700,
                   textColor: Colors.white,
                   textTheme: ButtonTextTheme.primary,
-                  minWidth: 100,
+                  minWidth: 20,
                   padding: const EdgeInsets.all(18),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),
@@ -78,19 +78,29 @@ class _MainMenuState extends ConsumerState<MainMenu> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Shimmer.fromColors(
-                    highlightColor: Colors.green.shade700,
-                    baseColor: Colors.green.shade900,
+                    highlightColor: Colors.green.shade500,
+                    baseColor: Colors.green.shade700,
                     period: const Duration(seconds: 5),
                     child: Text(
                       'Mini Wars',
                       style: Theme.of(context).textTheme.headline1!.copyWith(
-                          fontFamily: 'thesims', color: Colors.green.shade900),
+                          fontFamily: 'thesims',
+                          color: Colors.green.shade900,
+                          fontSize: type == DeviceType.web ? 28.0.sp : 64.0.sp),
                     ),
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(vertical: 8),
-                    width: 15.w,
-                    height: 8.h,
+                    width: !(type == DeviceType.web)
+                        ? type == DeviceType.windows
+                            ? 17.w
+                            : 36.w
+                        : 15.w,
+                    height: !(type == DeviceType.web)
+                        ? type == DeviceType.windows
+                            ? 4.h
+                            : 7.h
+                        : 8.h,
                     child: MaterialButton(
                       onPressed: () {
                         widget.gameRef.overlays.remove(MainMenu.routename);
