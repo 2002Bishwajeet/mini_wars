@@ -1,8 +1,9 @@
 import 'package:flame/game.dart';
+import 'package:flame/input.dart';
 
 import 'components/background_component.dart';
 
-class MiniWars extends FlameGame {
+class MiniWars extends FlameGame with HasKeyboardHandlerComponents {
   @override
   Future<void> onLoad() async {
     // FlameAudio.bgm.initialize();

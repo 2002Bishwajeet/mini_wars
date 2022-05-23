@@ -1,4 +1,5 @@
 import 'package:flame/components.dart';
+import 'package:flutter/services.dart';
 
 enum PlayerState {
   idle,
@@ -11,7 +12,8 @@ enum PlayerState {
   dead,
 }
 
-class Player extends SpriteAnimationGroupComponent<PlayerState> {
+class Player extends SpriteAnimationGroupComponent<PlayerState>
+    with KeyboardHandler {
   Player()
       : super(
             position: Vector2.all(64.0),
@@ -28,6 +30,25 @@ class Player extends SpriteAnimationGroupComponent<PlayerState> {
   late final SpriteAnimation deadAnimation;
 
   @override
+  bool onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
+    if (event is RawKeyDownEvent) {
+      if (event.logicalKey == LogicalKeyboardKey.space) {
+        current = PlayerState.jumping;
+      } else if (event.logicalKey == LogicalKeyboardKey.controlLeft) {
+        current = PlayerState.crouch;
+      } else if (event.logicalKey == LogicalKeyboardKey.keyD ||
+          event.logicalKey == LogicalKeyboardKey.arrowRight) {
+        current = PlayerState.running;
+      } else if (event.logicalKey == LogicalKeyboardKey.keyA ||
+          event.logicalKey == LogicalKeyboardKey.arrowLeft) {
+        current = PlayerState.running;
+      }
+    }
+
+    return true;
+  }
+
+  @override
   Future<void> onLoad() async {
     await loadAnimatedSprites();
     animations = {
@@ -40,7 +61,7 @@ class Player extends SpriteAnimationGroupComponent<PlayerState> {
       PlayerState.landing: landingAnimation,
       PlayerState.dead: deadAnimation,
     };
-    current = PlayerState.landing;
+    current = PlayerState.idle;
   }
 
   Future<void> loadAnimatedSprites() async {
