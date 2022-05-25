@@ -18,7 +18,8 @@ A Mini action game built using Flutter and Flame. Backend used Appwrite.
 
 ## What is Flame ?
 
-Flame is a 2D game engine made on top of Flutter
+Flame is a modular Flutter game engine that provides a complete set of out-of-the-way solutions for games. It takes advantage of the powerful infrastructure provided by Flutter but simplifies the code you need to build your projects.
+It provides you with a simple yet effective game loop implementation, and the necessary functionalities that you might need in a game. For instance; input, images, sprites, sprite sheets, animations, collision detection and a component system that we call Flame Component System (FCS for short).
 
 ## What is Appwrite?
 
