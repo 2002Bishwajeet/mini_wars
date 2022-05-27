@@ -17,36 +17,11 @@ class Authentication {
   ///  It is to access the all the account related methods. like get account
   ///  or create account , update account etc
   late Account account;
-  //  late keyowrd due to Null Safety
-  //  to know more about Null Safety visit https://dart.dev/null-safety/understanding-null-safety
 
-  //  We have created a constructor which will initialize the account object
-  //  Account class requires an object of Client.
-  //  I have decided to make a client object in the provider itself so you will
-  // see that soon
   Authentication(this.client) {
     account = Account(client);
   }
 
-  //  Time for some functions now
-  //  Since all the functions will be asynchronous we will be using Future
-  //  cause you know there is a future involved. you don't know what are you expecting
-
-  //  In older version appwrite SDK 1.0.2 , we used to get response as the output
-  //  and we had to manually add them into our custom models.
-  //  But fear not we are using the latest appwrite sdk version 2.0.2
-  //  This returns proper models so yup, it made your life a little easier.
-  //  When I started this project I had manually implemented those models
-  //  But this blog uses latest version of appwrite so we are going to skip that part
-
-  ///  This is a function [getAccount] which will return a [User] object containing the data
-  ///  of the user if the user is authenticated. Otherwise it will throw an exception
-  ///  SO we don't want the program to stop in between so we are returning NULL if
-  ///  it throws exception
-
-  ///  To know more about User Model `Ctrl+click` or `command + click`
-  ///  on User to go to the User model
-  ///  It's a nice practice to see these stuffs and explore them
   Future<User?> getAccount() async {
     try {
       return await account.get();
@@ -56,18 +31,17 @@ class Authentication {
     }
   }
 
+  void loginAnonymous() async {
+    try {
+      await account.createAnonymousSession();
+    } on AppwriteException catch (e) {
+      log(e.toString());
+    }
+  }
+
   // A function to login the user with email and password
   Future<void> login(BuildContext context) async {
     try {
-      ///  here account is the object of Account class and create session
-      ///  is a method of Account class which signs in the current user.
-      ///  We are using try catch block so that if there is any error we can
-      ///  show the user a proper message
-      ///  if the try is successful we would be actually checking which type of
-      ///  data we are receving from the server
-      ///  if you don't want to see you can comment it out.
-      ///  nevermind I did that for you😉
-      /// var data = await account.createSession(email: email, password: password);
       await account.createOAuth2Session(
           provider: 'discord', scopes: ["identify", "email"]);
     } catch (e) {
@@ -91,9 +65,6 @@ class Authentication {
   ///  A function to logout the current user
   Future<void> logout(BuildContext context) async {
     try {
-      ///  Delete session is the method to logout the user
-      ///  it expects sessionID but by passing 'current' it redirects to
-      ///  current loggedIn user in this application
       await account.deleteSession(sessionId: 'current');
     } catch (e) {
       // print(e);
