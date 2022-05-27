@@ -31,8 +31,6 @@ class _MainAppState extends ConsumerState<MainApp> {
     final user = await ref.read(userProvider.future);
     if (user != null) {
       ref.read(userLoggedInProvider.state).state = true;
-    } else {
-      ref.read(userLoggedInProvider.state).state = false;
     }
   }
 
