@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final clientProvider = Provider<Client>((ref) {
   return Client()
-      .setEndpoint('http://localhost:5000/v1')
-      .setProject('miniwars')
+      .setEndpoint('[YOUR_ENDPOINT]')
+      .setProject('[YOUR_PROJECT_ID]')
       .setSelfSigned(status: true);
 });

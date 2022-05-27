@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:mini_wars/components/player_component.dart';
 import 'package:mini_wars/mini_wars.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
-
-import '../api/auth/authentication.dart';
-import '../providers/auth.dart';
 
 class MainMenu extends ConsumerStatefulWidget {
   final MiniWars gameRef;
@@ -19,23 +15,8 @@ class MainMenu extends ConsumerStatefulWidget {
 }
 
 class _MainMenuState extends ConsumerState<MainMenu> {
-  ///  A loading variable to show the loading animation when you a function is ongoing
-  bool _isLoading = false;
-
-  ///  This function is used to show a spinning Indicator when the function is ongoing
-  void _loading() {
-    setState(() {
-      _isLoading = !_isLoading;
-    });
-  }
-
-  late final Authentication auth = ref.watch(authProvider);
-
   Future<void> _onPressedFunction() async {
-    _loading();
-    await auth.login(context);
-
-    _loading();
+    //  TODO: Implement this function
   }
 
   @override
@@ -103,8 +84,7 @@ class _MainMenuState extends ConsumerState<MainMenu> {
                         : 8.h,
                     child: MaterialButton(
                       onPressed: () {
-                        widget.gameRef.overlays.remove(MainMenu.routename);
-                        widget.gameRef.add(Player());
+                        //  TODO:
                       },
                       color: Colors.green.shade700,
                       textColor: Colors.white,
