@@ -1,4 +1,6 @@
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
 enum PlayerState {
@@ -13,12 +15,14 @@ enum PlayerState {
 }
 
 class Player extends SpriteAnimationGroupComponent<PlayerState>
-    with KeyboardHandler {
+    with KeyboardHandler, CollisionCallbacks {
   Player()
       : super(
-            position: Vector2.all(64.0),
-            size: Vector2.all(64.0),
-            anchor: Anchor.center);
+          position: Vector2.all(64.0),
+          size: Vector2.all(64.0),
+          anchor: Anchor.center,
+          current: PlayerState.idle,
+        );
 
   late final SpriteAnimation idleAnimation;
   late final SpriteAnimation crouchAnimation;
@@ -50,6 +54,8 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
 
   @override
   Future<void> onLoad() async {
+    debugMode = true;
+    await super.onLoad();
     await loadAnimatedSprites();
     animations = {
       PlayerState.idle: idleAnimation,
@@ -62,6 +68,16 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
       PlayerState.dead: deadAnimation,
     };
     current = PlayerState.idle;
+  }
+
+  @override
+  void update(double dt) {
+    super.update(dt);
+  }
+
+  @override
+  void render(Canvas canvas) {
+    super.render(canvas);
   }
 
   Future<void> loadAnimatedSprites() async {

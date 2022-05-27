@@ -28,6 +28,6 @@ final userProvider = FutureProvider<User?>((ref) async {
 ///  otherwise show other screen
 /// When the state changes the widget is rebuilt automatically
 ///  Keep it null so that we would be able to show the loading screen
-final userLoggedInProvider = StateProvider<bool?>((ref) {
-  return null;
+final userLoggedInProvider = StateProvider<bool>((ref) {
+  return false;
 });

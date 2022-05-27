@@ -16,6 +16,8 @@ void main() {
   runApp(const ProviderScope(child: MainApp()));
 }
 
+final _gameObject = MiniWars();
+
 class MainApp extends ConsumerStatefulWidget {
   const MainApp({Key? key}) : super(key: key);
 
@@ -47,7 +49,7 @@ class _MainAppState extends ConsumerState<MainApp> {
       theme: MiniWarsTheme.lightTheme(),
       debugShowCheckedModeBanner: false,
       home: GameWidget(
-        game: MiniWars(),
+        game: _gameObject,
         overlayBuilderMap: overlayRoutes,
         loadingBuilder: (context) => const Center(
           child: CircularProgressIndicator(),

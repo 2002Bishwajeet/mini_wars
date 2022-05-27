@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:mini_wars/components/player_component.dart';
 import 'package:mini_wars/mini_wars.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
@@ -30,6 +29,7 @@ class _MainMenuState extends ConsumerState<MainMenu> {
   }
 
   late final Authentication auth = ref.watch(authProvider);
+  late final isLoggedIn = ref.watch(userLoggedInProvider);
 
   Future<void> _onPressedFunction() async {
     _loading();
@@ -50,28 +50,30 @@ class _MainMenuState extends ConsumerState<MainMenu> {
               Positioned(
                 right: 20,
                 top: 20,
-                child: MaterialButton(
-                  onPressed: _onPressedFunction,
-                  color: Colors.green.shade700,
-                  textColor: Colors.white,
-                  textTheme: ButtonTextTheme.primary,
-                  minWidth: 20,
-                  padding: const EdgeInsets.all(18),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                    side: BorderSide(color: Colors.green.shade700),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      FaIcon(FontAwesomeIcons.discord),
-                      Text(
-                        ' Login with Discord',
-                        style: TextStyle(fontWeight: FontWeight.w600),
+                child: isLoggedIn
+                    ? const SizedBox()
+                    : MaterialButton(
+                        onPressed: _onPressedFunction,
+                        color: Colors.green.shade700,
+                        textColor: Colors.white,
+                        textTheme: ButtonTextTheme.primary,
+                        minWidth: 20,
+                        padding: const EdgeInsets.all(18),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          side: BorderSide(color: Colors.green.shade700),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            FaIcon(FontAwesomeIcons.discord),
+                            Text(
+                              ' Login with Discord',
+                              style: TextStyle(fontWeight: FontWeight.w600),
+                            ),
+                          ],
+                        ),
                       ),
-                    ],
-                  ),
-                ),
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -104,7 +106,13 @@ class _MainMenuState extends ConsumerState<MainMenu> {
                     child: MaterialButton(
                       onPressed: () {
                         widget.gameRef.overlays.remove(MainMenu.routename);
-                        widget.gameRef.add(Player());
+
+                        widget.gameRef
+                            .remove(widget.gameRef.mainMenubackground);
+
+                        widget.gameRef.add(widget.gameRef.gameBackground);
+
+                        widget.gameRef.add(widget.gameRef.hero);
                       },
                       color: Colors.green.shade700,
                       textColor: Colors.white,
