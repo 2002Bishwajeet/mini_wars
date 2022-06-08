@@ -30,6 +30,10 @@ class Authentication {
     //TODO : Complete the login method
   }
 
+  Future<void> loginAnonymous(BuildContext context) async {
+    //TODO : Complete the loginAnonymous method
+  }
+
   ///  A function to logout the current user
   Future<void> logout(BuildContext context) async {
     // TODO: Complete this function
