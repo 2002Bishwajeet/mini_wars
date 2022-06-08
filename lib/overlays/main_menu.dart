@@ -109,7 +109,7 @@ class _MainMenuState extends ConsumerState<MainMenu> {
 
                         widget.gameRef
                             .remove(widget.gameRef.mainMenubackground);
-
+                      
                         widget.gameRef.add(widget.gameRef.gameBackground);
 
                         widget.gameRef.add(widget.gameRef.hero);

@@ -1,7 +1,11 @@
-import 'package:flame/collisions.dart';
+import 'dart:math';
+
 import 'package:flame/components.dart';
+import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mini_wars/mini_wars.dart';
 
 enum PlayerState {
   idle,
@@ -15,11 +19,10 @@ enum PlayerState {
 }
 
 class Player extends SpriteAnimationGroupComponent<PlayerState>
-    with KeyboardHandler, CollisionCallbacks {
+    with KeyboardHandler {
   Player()
       : super(
-          position: Vector2.all(64.0),
-          size: Vector2.all(64.0),
+          size: Vector2.all(6.2),
           anchor: Anchor.center,
           current: PlayerState.idle,
         );
@@ -36,17 +39,22 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
   @override
   bool onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
     if (event is RawKeyDownEvent) {
-      if (event.logicalKey == LogicalKeyboardKey.space) {
+      if (keysPressed.contains(LogicalKeyboardKey.space)) {
         current = PlayerState.jumping;
-      } else if (event.logicalKey == LogicalKeyboardKey.controlLeft) {
+      } else if (keysPressed.contains(LogicalKeyboardKey.controlLeft)) {
         current = PlayerState.crouch;
-      } else if (event.logicalKey == LogicalKeyboardKey.keyD ||
-          event.logicalKey == LogicalKeyboardKey.arrowRight) {
+      } else if (keysPressed.contains(LogicalKeyboardKey.keyD) ||
+          keysPressed.contains(LogicalKeyboardKey.arrowRight)) {
         current = PlayerState.running;
-      } else if (event.logicalKey == LogicalKeyboardKey.keyA ||
-          event.logicalKey == LogicalKeyboardKey.arrowLeft) {
+        if (transform.scale.x == -1) transform.flipHorizontally();
+      } else if (keysPressed.contains(LogicalKeyboardKey.keyA) ||
+          keysPressed.contains(LogicalKeyboardKey.arrowLeft)) {
         current = PlayerState.running;
+        if (transform.scale.x == 1) transform.flipHorizontally();
       }
+    }
+    if (event is RawKeyUpEvent) {
+      current = PlayerState.idle;
     }
 
     return true;
@@ -54,7 +62,6 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
 
   @override
   Future<void> onLoad() async {
-    debugMode = true;
     await super.onLoad();
     await loadAnimatedSprites();
     animations = {
@@ -67,7 +74,6 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
       PlayerState.landing: landingAnimation,
       PlayerState.dead: deadAnimation,
     };
-    current = PlayerState.idle;
   }
 
   @override
@@ -153,5 +159,111 @@ class Player extends SpriteAnimationGroupComponent<PlayerState>
         textureSize: Vector2(26, 22),
       ),
     );
+  }
+}
+
+class Hero extends BodyComponent<MiniWars> with KeyboardHandler {
+  final Vector2 position;
+  final Vector2 size;
+  Hero(
+    this.position, {
+    Vector2? size,
+  })  : size = size ?? Vector2.all(6.0),
+        super(
+          paint: Paint()..color = const Color.fromARGB(0, 255, 255, 255),
+        );
+
+  final Vector2 velocity = Vector2(0, 0);
+  static const int speed = 20000;
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+
+    add(Player());
+  }
+
+  @override
+  bool onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
+    bool isDown = event is RawKeyDownEvent;
+
+    const space = LogicalKeyboardKey.space;
+    const a = LogicalKeyboardKey.keyA;
+    const s = LogicalKeyboardKey.keyS;
+    const d = LogicalKeyboardKey.keyD;
+
+    if (event.logicalKey == space) {
+      if (isDown) {
+        velocity.y = -1;
+      } else if (keysPressed.contains(s)) {
+        velocity.y = 1;
+      } else {
+        velocity.y = 0;
+      }
+    } else if (event.logicalKey == s) {
+      if (isDown) {
+        velocity.y = 1;
+      } else if (keysPressed.contains(space)) {
+        velocity.y = -1;
+      } else {
+        velocity.y = 0;
+      }
+    } else if (event.logicalKey == a) {
+      if (isDown) {
+        velocity.x = -1;
+      } else if (keysPressed.contains(d)) {
+        velocity.x = 1;
+      } else {
+        velocity.x = 0;
+      }
+    } else if (event.logicalKey == d) {
+      if (isDown) {
+        velocity.x = 1;
+      } else if (keysPressed.contains(a)) {
+        velocity.x = -1;
+      } else {
+        velocity.x = 0;
+      }
+    }
+
+    return super.onKeyEvent(event, keysPressed);
+  }
+
+  @override
+  Body createBody() {
+    final shape = PolygonShape();
+
+    final vertices = [
+      Vector2(-size.x / 2, size.y / 2),
+      Vector2(size.x / 2, size.y / 2),
+      Vector2(size.x / 2, -size.y / 2),
+      Vector2(-size.x / 2, -size.y / 2),
+    ];
+    shape.set(vertices);
+
+    final fixtureDef = FixtureDef(
+      shape,
+      userData: this, // To be able to determine object in collision
+      restitution: 0,
+      density: 50.0,
+      friction: 0.5,
+    );
+
+    final bodyDef = BodyDef(
+      position: position,
+      angle: (position.x + position.y) / 2 * pi,
+      type: BodyType.dynamic,
+    );
+    return world.createBody(bodyDef)..createFixture(fixtureDef);
+  }
+
+  @override
+  void update(double dt) {
+    super.update(dt);
+    final impulse = velocity * (speed * dt);
+    body.applyLinearImpulse(impulse);
+
+    // body.position.add(displacement);
+    // print(body.position);
   }
 }
