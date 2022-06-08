@@ -93,3 +93,7 @@ To setup your Appwrite project:
 4. Enter a Name and custom Project ID for your project and click create.
 
 At this moment your Dashboard is ready to use.
+
+**Follow the link below to successfully integrate appwrite in your Flutter project:**
+
+<https://appwrite.io/docs/getting-started-for-flutter>
