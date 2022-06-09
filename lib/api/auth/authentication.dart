@@ -31,6 +31,8 @@ class Authentication {
     }
   }
 
+  /// This will be invoked if the user didn't logged in
+  /// and clicked play button directly
   void loginAnonymous() async {
     try {
       await account.createAnonymousSession();
@@ -39,7 +41,7 @@ class Authentication {
     }
   }
 
-  // A function to login the user with email and password
+  // A function to login the user Discord OAuth
   Future<void> login(BuildContext context) async {
     try {
       await account.createOAuth2Session(
