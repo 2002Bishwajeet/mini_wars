@@ -46,7 +46,7 @@ class _MainAppState extends ConsumerState<MainApp> {
       title: 'Mini Wars',
       theme: MiniWarsTheme.lightTheme(),
       debugShowCheckedModeBanner: false,
-      home: GameWidget(
+      home: GameWidget<MiniWars>(
         game: _gameObject,
         overlayBuilderMap: overlayRoutes,
         loadingBuilder: (context) => const Center(
