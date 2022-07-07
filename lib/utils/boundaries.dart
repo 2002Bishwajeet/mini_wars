@@ -23,7 +23,7 @@ class Wall extends BodyComponent {
   @override
   Body createBody() {
     final shape = EdgeShape()..set(start, end);
-    final fixtureDef = FixtureDef(shape, friction: 0.3);
+    final fixtureDef = FixtureDef(shape, friction: 0.8, restitution: 0);
     final bodyDef = BodyDef(
       userData: this, // To be able to determine object in collision
       position: Vector2.zero(),
